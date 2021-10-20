@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./search-item.component.scss";
+import Config from "../../../../config";
 
 class SearchItemComponent extends Component {
   render() {
@@ -9,9 +10,7 @@ class SearchItemComponent extends Component {
           <img
             class="container__image"
             alt="text"
-            src={
-              "http://localhost/kontrol/uploads/" + this.props.address + ".png"
-            }
+            src={Config.UPLOAD_Folder_URL + this.props.address + ".png"}
           />
         </a>
         <div class="container__text">

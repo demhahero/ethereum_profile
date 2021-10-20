@@ -11,6 +11,7 @@ import SginupComponent from "./Signup/signup.component";
 import ProfileComponent from "./Profile/profile-main.component";
 import EditProfileComponent from "./Profile/edit-profile/edit-profile.component";
 import Footer from "./Footer";
+import Config from "../config";
 
 class App extends Component {
   async componentWillMount() {
@@ -40,10 +41,7 @@ class App extends Component {
         //const hash = await token.methods.getProfile(this.state.account).call();
         const balance =
           (await token.methods.balanceOf(this.state.account).call()) / 10 ** 18;
-        fetch(
-          "http://localhost/kontrol/api.php?do=getprofile&address=" +
-            this.state.account
-        )
+        fetch(Config.API_URL + "?do=getprofile&address=" + this.state.account)
           .then((response) => response.json())
           .then((data) => this.setState({ profile_value: data["value"] }));
 
@@ -76,7 +74,8 @@ class App extends Component {
         .changeProfile(value)
         .send({ from: this.state.account });
       fetch(
-        "http://localhost/kontrol/api.php?do=update_value&address=" +
+        Config.API_URL +
+          "?do=update_value&address=" +
           this.state.account +
           "&value=" +
           value

@@ -6,6 +6,7 @@ import { stateToHTML } from "draft-js-export-html";
 import { Form, Button } from "react-bootstrap";
 import Token from "../../../abis/Token.json";
 import Web3 from "web3";
+import Config from "../../../config";
 
 class EditProfileComponent extends Component {
   constructor(props) {
@@ -79,8 +80,7 @@ class EditProfileComponent extends Component {
     };
 
     await fetch(
-      "http://localhost/kontrol/api.php?do=update&address=" +
-        this.state.account,
+      Config.API_URL + "?do=update&address=" + this.state.account,
       requestOptions
     )
       .then((response) => response.json())
@@ -119,7 +119,8 @@ class EditProfileComponent extends Component {
               body: "content=" + content,
             };
             fetch(
-              "http://localhost/kontrol/api.php?do=get_hash_for_user&address=" +
+              Config.API_URL +
+                "?do=get_hash_for_user&address=" +
                 this.state.account,
               requestOptions
             )

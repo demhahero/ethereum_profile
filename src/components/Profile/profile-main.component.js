@@ -6,6 +6,7 @@ import { CheckCircle, FileEarmarkX } from "react-bootstrap-icons";
 import Token from "../../abis/Token.json";
 import Web3 from "web3";
 import { useLocation } from "react-router-dom";
+import Config from "../../config";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -48,8 +49,7 @@ export default function ProfileComponent() {
           };
 
           await fetch(
-            "http://localhost/kontrol/api.php?do=get_profile&id=" +
-              query.get("id"),
+            Config.API_URL + "?do=get_profile&id=" + query.get("id"),
             requestOptions
           )
             .then((response) => response.json())
@@ -82,7 +82,7 @@ export default function ProfileComponent() {
         <Row>
           <Col>
             <Image
-              src={"http://localhost/kontrol/uploads/" + address + ".png"}
+              src={Config.UPLOAD_Folder_URL + address + ".png"}
               thumbnail
             />
           </Col>

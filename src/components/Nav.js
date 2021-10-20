@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Nav.scss";
 import Web3 from "web3";
+import Config from "../config";
 
 class Nav extends Component {
   constructor(props) {
@@ -33,10 +34,7 @@ class Nav extends Component {
   }
 
   async getID() {
-    fetch(
-      "http://localhost/kontrol/api.php?do=get_profile&address=" +
-        this.state.account
-    )
+    fetch(Config.API_URL + "?do=get_profile&address=" + this.state.account)
       .then((response) => response.json())
       .then((response) => {
         if (response["result"] === true) {

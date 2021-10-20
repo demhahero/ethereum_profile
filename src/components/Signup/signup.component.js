@@ -9,6 +9,7 @@ import SignupComplete from "./signup-complete/signup-complete.component";
 import SignupContentEnter from "./signup-content-enter/signup-content-enter.component";
 import SignupPictureEnter from "./signup-picture-enter/signup-picture-enter.component";
 import { ProgressBar, Alert, Card, Spinner } from "react-bootstrap";
+import Config from "../../config";
 
 class SginupComponent extends Component {
   steps = 6;
@@ -69,7 +70,7 @@ class SginupComponent extends Component {
   }
 
   async onSendVerificationCodeClick(email) {
-    fetch("http://localhost/kontrol/api.php?do=check_email&email=" + email)
+    fetch(Config.API_URL + "?do=check_email&email=" + email)
       .then((response) => response.json())
       .then((response) => {
         if (response["result"] === true) {
@@ -82,7 +83,8 @@ class SginupComponent extends Component {
 
   async onVerifyCodeClick(code) {
     fetch(
-      "http://localhost/kontrol/api.php?do=verify_email&email=" +
+      Config.API_URL +
+        "?do=verify_email&email=" +
         this.state.email +
         "&code=" +
         code
@@ -101,7 +103,7 @@ class SginupComponent extends Component {
   }
 
   async onIDEnterClick(id) {
-    fetch("http://localhost/kontrol/api.php?do=check_id&id=" + id)
+    fetch(Config.API_URL + "?do=check_id&id=" + id)
       .then((response) => response.json())
       .then((response) => {
         if (response["result"] === true) {
@@ -125,7 +127,8 @@ class SginupComponent extends Component {
       body: "content=" + content,
     };
     await fetch(
-      "http://localhost/kontrol/api.php?do=get_hash&address=" +
+      Config.API_URL +
+        "?do=get_hash&address=" +
         this.state.account +
         "&email=" +
         this.state.email +
@@ -167,7 +170,8 @@ class SginupComponent extends Component {
     };
 
     await fetch(
-      "http://localhost/kontrol/api.php?do=update&address=" +
+      Config.API_URL +
+        "?do=update&address=" +
         this.state.account +
         "&email=" +
         this.state.email +
