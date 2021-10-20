@@ -1,7 +1,6 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import "./signup.component.scss";
 import Web3 from "web3";
-import axios from "axios";
 import Token from "../../abis/Token.json";
 import SignupEmailEnter from "./signup-email-enter/signup-email-enter.component";
 import SignupVerifyEmailCode from "./signup-verify-email-code/signup-verify-email-code.component";
@@ -73,7 +72,7 @@ class SginupComponent extends Component {
     fetch("http://localhost/kontrol/api.php?do=check_email&email=" + email)
       .then((response) => response.json())
       .then((response) => {
-        if (response["result"] == true) {
+        if (response["result"] === true) {
           this.setState({ email: email, progress: (2 / this.steps) * 100 });
         } else {
           alert("Email existed! Choose another one.");
@@ -90,7 +89,7 @@ class SginupComponent extends Component {
     )
       .then((response) => response.json())
       .then((response) => {
-        if (response["result"] == true) {
+        if (response["result"] === true) {
           this.setState({
             code_verified: true,
             progress: (3 / this.steps) * 100,
@@ -105,7 +104,7 @@ class SginupComponent extends Component {
     fetch("http://localhost/kontrol/api.php?do=check_id&id=" + id)
       .then((response) => response.json())
       .then((response) => {
-        if (response["result"] == true) {
+        if (response["result"] === true) {
           this.setState({ id: id, progress: (4 / this.steps) * 100 });
         } else {
           alert("Wrong Code, try again!");
@@ -136,7 +135,7 @@ class SginupComponent extends Component {
     )
       .then((response) => response.json())
       .then((response) => {
-        if (response["result"] == true) {
+        if (response["result"] === true) {
           this.doTransaction(response["hash"], content);
         } else {
           alert("Wrong Code, try again!");
@@ -178,7 +177,7 @@ class SginupComponent extends Component {
     )
       .then((response) => response.json())
       .then((response) => {
-        if (response["result"] == true) {
+        if (response["result"] === true) {
           this.setState({ content: content, progress: (6 / this.steps) * 100 });
         } else {
           alert("Wrong Code, try again!");
@@ -204,22 +203,22 @@ class SginupComponent extends Component {
                   onSendVerificationCodeClick={this.onSendVerificationCodeClick}
                 />
               );
-            } else if (this.state.email != "" && !this.state.code_verified) {
+            } else if (this.state.email !== "" && !this.state.code_verified) {
               return (
                 <SignupVerifyEmailCode
                   onVerifyCodeClick={this.onVerifyCodeClick}
                 />
               );
             } else if (
-              this.state.email != "" &&
+              this.state.email !== "" &&
               this.state.code_verified &&
-              this.state.id == ""
+              this.state.id === ""
             ) {
               return <SignupIDEnter onIDEnterClick={this.onIDEnterClick} />;
             } else if (
-              this.state.email != "" &&
+              this.state.email !== "" &&
               this.state.code_verified &&
-              this.state.id != "" &&
+              this.state.id !== "" &&
               this.state.picture === ""
             ) {
               return (
@@ -229,10 +228,10 @@ class SginupComponent extends Component {
                 />
               );
             } else if (
-              this.state.email != "" &&
+              this.state.email !== "" &&
               this.state.code_verified &&
-              this.state.id != "" &&
-              this.state.picture != "" &&
+              this.state.id !== "" &&
+              this.state.picture !== "" &&
               this.state.transaction === false
             ) {
               return (
@@ -241,12 +240,12 @@ class SginupComponent extends Component {
                 />
               );
             } else if (
-              this.state.email != "" &&
+              this.state.email !== "" &&
               this.state.code_verified &&
-              this.state.id != "" &&
-              this.state.picture != "" &&
+              this.state.id !== "" &&
+              this.state.picture !== "" &&
               this.state.transaction === true &&
-              this.state.content == ""
+              this.state.content === ""
             ) {
               return <Spinner animation="border" />;
             } else {

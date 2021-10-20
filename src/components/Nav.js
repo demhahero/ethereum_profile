@@ -39,7 +39,7 @@ class Nav extends Component {
     )
       .then((response) => response.json())
       .then((response) => {
-        if (response["result"] == true) {
+        if (response["result"] === true) {
           this.setState({ id: response["id"] });
         } else {
         }

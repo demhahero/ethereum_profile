@@ -85,7 +85,7 @@ class EditProfileComponent extends Component {
     )
       .then((response) => response.json())
       .then((response) => {
-        if (response["result"] == true) {
+        if (response["result"] === true) {
           alert("Done");
         } else {
           alert("Wrong Code, try again!");
@@ -125,7 +125,7 @@ class EditProfileComponent extends Component {
             )
               .then((response) => response.json())
               .then((response) => {
-                if (response["result"] == true) {
+                if (response["result"] === true) {
                   this.doTransaction(response["hash"], content);
                 } else {
                   alert("Wrong Code, try again!");

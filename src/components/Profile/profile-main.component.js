@@ -5,7 +5,7 @@ import { Card, Container, Row, Col, Image } from "react-bootstrap";
 import { CheckCircle, FileEarmarkX } from "react-bootstrap-icons";
 import Token from "../../abis/Token.json";
 import Web3 from "web3";
-import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -17,7 +17,6 @@ export default function ProfileComponent() {
   const [content, setContent] = useState(0);
   const [address, setAddress] = useState(0);
   const [verified, setVerified] = useState(0);
-  const [hash, setHash] = useState(0);
   let query = useQuery();
 
   useEffect(() => {
@@ -39,7 +38,6 @@ export default function ProfileComponent() {
             "0xA07A5731ed06Dc1a21A497902F9fa4edeeb99F8F"
           );
           const hash = await token.methods.getProfile(accounts[0]).call();
-          setHash(hash);
 
           const requestOptions = {
             method: "POST",
@@ -56,7 +54,7 @@ export default function ProfileComponent() {
           )
             .then((response) => response.json())
             .then((response) => {
-              if (response["result"] == true) {
+              if (response["result"] === true) {
                 setID(response["id"]);
                 setEmail(response["email"]);
                 setContent(response["content"]);
