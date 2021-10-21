@@ -26,10 +26,10 @@ class Nav extends Component {
         this.setState({ account: accounts[0], balance: balance, web3: web3 });
         this.getID();
       } else {
-        window.alert("Please login with MetaMask");
+        this.setState({ id: "" });
       }
     } else {
-      window.alert("Please install MetaMask");
+      this.setState({ id: "" });
     }
   }
 
@@ -46,12 +46,12 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand" href="/">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top flex-md-nowrap p-0 shadow">
+        <a className="navbar-brand" href="/">
           Serapeum
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNav"
@@ -59,22 +59,22 @@ class Nav extends Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="/Search">
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <a className="nav-link" href="/Search">
                 Search
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href={"/Profile?id=" + this.state.id}>
+            <li className="nav-item">
+              <a className="nav-link" href={"/Profile?id=" + this.state.id}>
                 Profile
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Edit-profile">
+            <li className="nav-item">
+              <a className="nav-link" href="/Edit-profile">
                 Edit Profile
               </a>
             </li>

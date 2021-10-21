@@ -14,7 +14,7 @@ class Footer extends Component {
 
   render() {
     return (
-      <footer id="footer" class="footer-1">
+      <footer id="footer" className="footer-1">
         Copyright 2021
       </footer>
     );

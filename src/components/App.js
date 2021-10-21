@@ -12,6 +12,7 @@ import ProfileComponent from "./Profile/profile-main.component";
 import EditProfileComponent from "./Profile/edit-profile/edit-profile.component";
 import Footer from "./Footer";
 import Config from "../config";
+import { Web3ReactProvider } from "@web3-react/core";
 
 class App extends Component {
   async componentWillMount() {
@@ -107,83 +108,92 @@ class App extends Component {
     };
   }
 
+  getLibrary(provider) {
+    return new Web3(provider);
+  }
+
   render() {
     return (
-      <Router>
-        <div className="text-monospace">
-          <div className="container-fluid mt-5 text-center">
-            <Nav />
-            <Switch>
-              <Route exact path="/">
-                <HomeComponent />
-              </Route>
-              <Route path="/Profile">
-                <ProfileComponent />
-              </Route>
-              <Route path="/Edit-profile">
-                <EditProfileComponent />
-              </Route>
-              <Route path="/Search">
-                <SearchMainComponent />
-              </Route>
-              <Route path="/Signup">
-                <SginupComponent />
-              </Route>
-              <Route path="/Login">
-                <br></br>
-                <h1>Welcome to Profiles</h1>
-                <h2>{this.state.account}</h2>
-                <br></br>
-                <div className="row">
-                  <main role="main" className="col-lg-12  text-center">
-                    <div className="content mr-auto ml-auto">
-                      <Tabs
-                        defaultActiveKey="profile"
-                        id="uncontrolled-tab-example"
-                      >
-                        <Tab eventKey="profile" title="Profile">
-                          <div>
-                            Balance: {this.state.balance}
-                            <br></br>
-                            Profile: {this.state.profile_value}
-                          </div>
-                        </Tab>
-                        <Tab eventKey="withdraw" title="Update">
-                          <div>
-                            <form
-                              onSubmit={(e) => {
-                                e.preventDefault();
-                                this.setProfile(this.profile_value.value);
-                              }}
-                            >
-                              <div className="form-group mr-sm-2">
-                                <br></br>
-                                <textarea
-                                  id="profile_value"
-                                  ref={(input) => {
-                                    this.profile_value = input;
-                                  }}
-                                  className="form-control form-control-md"
-                                  defaultValue={this.state.profile_value}
-                                  required
-                                />
-                              </div>
-                              <button type="submit" className="btn btn-primary">
-                                Save
-                              </button>
-                            </form>
-                          </div>
-                        </Tab>
-                      </Tabs>
-                    </div>
-                  </main>
-                </div>
-              </Route>
-            </Switch>
-            <Footer />
+      <Web3ReactProvider getLibrary={this.getLibrary}>
+        <Router>
+          <div className="text-monospace">
+            <div className="container-fluid mt-5 text-center">
+              <Nav />
+              <Switch>
+                <Route exact path="/">
+                  <HomeComponent />
+                </Route>
+                <Route path="/Profile">
+                  <ProfileComponent />
+                </Route>
+                <Route path="/Edit-profile">
+                  <EditProfileComponent />
+                </Route>
+                <Route path="/Search">
+                  <SearchMainComponent />
+                </Route>
+                <Route path="/Signup">
+                  <SginupComponent />
+                </Route>
+                <Route path="/Login">
+                  <br></br>
+                  <h1>Welcome to Profiles</h1>
+                  <h2>{this.state.account}</h2>
+                  <br></br>
+                  <div className="row">
+                    <main role="main" className="col-lg-12  text-center">
+                      <div className="content mr-auto ml-auto">
+                        <Tabs
+                          defaultActiveKey="profile"
+                          id="uncontrolled-tab-example"
+                        >
+                          <Tab eventKey="profile" title="Profile">
+                            <div>
+                              Balance: {this.state.balance}
+                              <br></br>
+                              Profile: {this.state.profile_value}
+                            </div>
+                          </Tab>
+                          <Tab eventKey="withdraw" title="Update">
+                            <div>
+                              <form
+                                onSubmit={(e) => {
+                                  e.preventDefault();
+                                  this.setProfile(this.profile_value.value);
+                                }}
+                              >
+                                <div className="form-group mr-sm-2">
+                                  <br></br>
+                                  <textarea
+                                    id="profile_value"
+                                    ref={(input) => {
+                                      this.profile_value = input;
+                                    }}
+                                    className="form-control form-control-md"
+                                    defaultValue={this.state.profile_value}
+                                    required
+                                  />
+                                </div>
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary"
+                                >
+                                  Save
+                                </button>
+                              </form>
+                            </div>
+                          </Tab>
+                        </Tabs>
+                      </div>
+                    </main>
+                  </div>
+                </Route>
+              </Switch>
+              <Footer />
+            </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </Web3ReactProvider>
     );
   }
 }

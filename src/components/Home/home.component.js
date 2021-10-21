@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import "./home.component.scss";
+import ConnectToWallet from "./connect-button/connect.component";
 
 class HomeComponent extends Component {
   handleClick(e) {
@@ -8,6 +9,7 @@ class HomeComponent extends Component {
       window.location = "/Search";
     }
   }
+
   render() {
     return (
       <div>
@@ -36,7 +38,7 @@ class HomeComponent extends Component {
           </Button>
         </div>
         <div>
-          <Button>Connect</Button>
+          <ConnectToWallet />
         </div>
       </div>
     );
