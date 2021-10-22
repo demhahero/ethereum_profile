@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./Nav.scss";
 import Web3 from "web3";
 import Config from "../config";
+import ConnectToWallet from "./Home/connect-button/connect.component";
 
 class Nav extends Component {
   constructor(props) {
@@ -46,23 +47,12 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top flex-md-nowrap p-0 shadow">
-        <a className="navbar-brand" href="/">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top flex-md-nowrap p-0 shadow justify-content-between">
+        <a className="navbar-brand margin-xs" href="/">
           Serapeum
         </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
               <a className="nav-link" href="/Search">
                 Search
@@ -79,6 +69,9 @@ class Nav extends Component {
               </a>
             </li>
           </ul>
+        </div>
+        <div class="inline my-2 my-lg-0">
+          <ConnectToWallet />
         </div>
       </nav>
     );

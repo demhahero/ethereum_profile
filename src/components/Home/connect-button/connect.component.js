@@ -2,7 +2,6 @@ import React from "react";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../Wallet/connectors";
 import "./connect.component.scss";
-import { Button } from "react-bootstrap";
 
 export default function ConnectToWallet() {
   const { active, account, activate, deactivate } = useWeb3React();
@@ -25,15 +24,28 @@ export default function ConnectToWallet() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Button onClick={connect}>Connect to MetaMask</Button>
       {active ? (
-        <span>
-          Connected with <b>{account}</b>
-        </span>
+        <div>
+          <span>
+            <b>{account}</b>
+          </span>
+          <button
+            className="btn btn-outline-success my-2 my-sm-0"
+            onClick={disconnect}
+          >
+            Disconnect
+          </button>
+        </div>
       ) : (
-        <span>Not connected</span>
+        <div>
+          <button
+            className="btn btn-outline-success my-2 my-sm-0"
+            onClick={connect}
+          >
+            Connect to MetaMask
+          </button>
+        </div>
       )}
-      <Button onClick={disconnect}>Disconnect</Button>
     </div>
   );
 }
