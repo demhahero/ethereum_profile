@@ -24,7 +24,7 @@ class SignupPictureEnter extends Component {
 
   onChange(e) {
     this.setState({ file: e.target.files[0] });
-    this.uploadFile(this.state.file);
+    this.uploadFile(e.target.files[0]);
   }
 
   async uploadFile(file) {
