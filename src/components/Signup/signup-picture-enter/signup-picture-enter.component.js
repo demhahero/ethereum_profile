@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, ProgressBar } from "react-bootstrap";
 import Config from "../../../config";
 
 class SignupPictureEnter extends Component {
@@ -9,6 +9,8 @@ class SignupPictureEnter extends Component {
     super(props);
     this.state = {
       file: null,
+      progress: 0,
+      disabled: true,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -22,11 +24,13 @@ class SignupPictureEnter extends Component {
 
   onChange(e) {
     this.setState({ file: e.target.files[0] });
+    this.uploadFile(this.state.file);
   }
 
   async uploadFile(file) {
     const formData = new FormData();
-
+    this.setState({ progress: 0 });
+    this.setState({ disabled: true });
     formData.append("picture", file);
     return await axios.post(
       this.UPLOAD_ENDPOINT + this.props.address,
@@ -34,6 +38,16 @@ class SignupPictureEnter extends Component {
       {
         headers: {
           "content-type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          var percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          this.setState({ progress: percentCompleted });
+          console.log(percentCompleted);
+          if (percentCompleted === 100) {
+            this.setState({ disabled: false });
+          }
         },
       }
     );
@@ -49,12 +63,13 @@ class SignupPictureEnter extends Component {
             type="file"
             onChange={this.onChange}
           />
+          <ProgressBar variant="success" striped now={this.state.progress} />
         </Form.Group>
         <Button
+          disabled={this.state.disabled}
           variant="primary"
           className="float-end"
           onClick={() => {
-            this.uploadFile(this.state.file);
             this.props.onPictureEnterClick();
           }}
         >

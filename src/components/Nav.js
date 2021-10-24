@@ -70,7 +70,7 @@ class Nav extends Component {
             </li>
           </ul>
         </div>
-        <div class="inline my-2 my-lg-0">
+        <div className="inline my-2 my-lg-0">
           <ConnectToWallet />
         </div>
       </nav>
