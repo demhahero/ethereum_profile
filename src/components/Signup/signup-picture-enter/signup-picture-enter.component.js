@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Form, Button, ProgressBar } from "react-bootstrap";
+import { Form, ProgressBar } from "react-bootstrap";
 import Config from "../../../config";
 
 class SignupPictureEnter extends Component {
@@ -65,16 +65,6 @@ class SignupPictureEnter extends Component {
           />
           <ProgressBar variant="success" striped now={this.state.progress} />
         </Form.Group>
-        <Button
-          disabled={this.state.disabled}
-          variant="primary"
-          className="float-end"
-          onClick={() => {
-            this.props.onPictureEnterClick();
-          }}
-        >
-          Next
-        </Button>
       </Form>
     );
   }

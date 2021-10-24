@@ -12,12 +12,12 @@ import { ProgressBar, Alert, Card, Spinner } from "react-bootstrap";
 import Config from "../../config";
 
 class SginupComponent extends Component {
-  steps = 6;
-
+  steps = 4;
   constructor(props) {
     super(props);
     this.state = {
       email: "",
+      step: 1,
       code_verified: false,
       id: "",
       content: "",
@@ -27,6 +27,7 @@ class SginupComponent extends Component {
       progress: (1 / this.steps) * 100,
       transaction: false,
       token: null,
+      enable_next: false,
     };
 
     this.onSendVerificationCodeClick =
@@ -35,6 +36,7 @@ class SginupComponent extends Component {
     this.onIDEnterClick = this.onIDEnterClick.bind(this);
     this.onPictureEnterClick = this.onPictureEnterClick.bind(this);
     this.onContentEnterClick = this.onContentEnterClick.bind(this);
+    this.backToEmail = this.backToEmail.bind(this);
     this.loadBlockchainData();
   }
 
@@ -74,11 +76,23 @@ class SginupComponent extends Component {
       .then((response) => response.json())
       .then((response) => {
         if (response["result"] === true) {
-          this.setState({ email: email, progress: (2 / this.steps) * 100 });
+          this.setState({
+            email: email,
+            step: 2,
+            progress: (2 / this.steps) * 100,
+          });
         } else {
           alert("Email existed! Choose another one.");
         }
       });
+  }
+
+  async backToEmail() {
+    this.setState({ step: 1, progress: (1 / this.steps) * 100 });
+  }
+
+  async backToID() {
+    this.setState({ step: 1, progress: (3 / this.steps) * 100 });
   }
 
   async onVerifyCodeClick(code) {
@@ -94,6 +108,7 @@ class SginupComponent extends Component {
         if (response["result"] === true) {
           this.setState({
             code_verified: true,
+            step: 3,
             progress: (3 / this.steps) * 100,
           });
         } else {
@@ -107,15 +122,20 @@ class SginupComponent extends Component {
       .then((response) => response.json())
       .then((response) => {
         if (response["result"] === true) {
-          this.setState({ id: id, progress: (4 / this.steps) * 100 });
+          this.setState({ enable_next: true, id: id });
         } else {
           alert("Wrong Code, try again!");
+          this.setState({ enable_next: false });
         }
       });
   }
 
   async onPictureEnterClick() {
-    this.setState({ picture: "yes", progress: (5 / this.steps) * 100 });
+    this.setState({
+      picture: "yes",
+      step: 5,
+      progress: (5 / this.steps) * 100,
+    });
   }
 
   async onContentEnterClick(content) {
@@ -148,7 +168,10 @@ class SginupComponent extends Component {
 
   async doTransaction(hash, content) {
     try {
-      this.setState({ transaction: true });
+      this.setState({
+        step: 4,
+        progress: (4 / this.steps) * 100,
+      });
       await this.state.token.methods
         .changeProfile(hash)
         .send({ from: this.state.account })
@@ -182,7 +205,11 @@ class SginupComponent extends Component {
       .then((response) => response.json())
       .then((response) => {
         if (response["result"] === true) {
-          this.setState({ content: content, progress: (6 / this.steps) * 100 });
+          this.setState({
+            content: content,
+            step: 5,
+            progress: (5 / this.steps) * 100,
+          });
         } else {
           alert("Wrong Code, try again!");
         }
@@ -201,56 +228,36 @@ class SginupComponent extends Component {
           <br />
           <br />
           {(() => {
-            if (this.state.email === "") {
+            if (this.state.step === 1) {
               return (
                 <SignupEmailEnter
                   onSendVerificationCodeClick={this.onSendVerificationCodeClick}
                 />
               );
-            } else if (this.state.email !== "" && !this.state.code_verified) {
+            } else if (this.state.step === 2) {
               return (
                 <SignupVerifyEmailCode
                   onVerifyCodeClick={this.onVerifyCodeClick}
+                  backToEmail={this.backToEmail}
                 />
               );
-            } else if (
-              this.state.email !== "" &&
-              this.state.code_verified &&
-              this.state.id === ""
-            ) {
-              return <SignupIDEnter onIDEnterClick={this.onIDEnterClick} />;
-            } else if (
-              this.state.email !== "" &&
-              this.state.code_verified &&
-              this.state.id !== "" &&
-              this.state.picture === ""
-            ) {
+            } else if (this.state.step === 3) {
               return (
-                <SignupPictureEnter
-                  onPictureEnterClick={this.onPictureEnterClick}
-                  address={this.state.account}
-                />
+                <div>
+                  <SignupIDEnter onIDEnterClick={this.onIDEnterClick} />
+
+                  <SignupPictureEnter
+                    onPictureEnterClick={this.onPictureEnterClick}
+                  />
+
+                  <SignupContentEnter
+                    onContentEnterClick={this.onContentEnterClick}
+                    backToEmail={this.backToEmail}
+                    enable_next={this.state.enable_next}
+                  />
+                </div>
               );
-            } else if (
-              this.state.email !== "" &&
-              this.state.code_verified &&
-              this.state.id !== "" &&
-              this.state.picture !== "" &&
-              this.state.transaction === false
-            ) {
-              return (
-                <SignupContentEnter
-                  onContentEnterClick={this.onContentEnterClick}
-                />
-              );
-            } else if (
-              this.state.email !== "" &&
-              this.state.code_verified &&
-              this.state.id !== "" &&
-              this.state.picture !== "" &&
-              this.state.transaction === true &&
-              this.state.content === ""
-            ) {
+            } else if (this.state.step === 4) {
               return <Spinner animation="border" />;
             } else {
               return (
