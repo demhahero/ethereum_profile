@@ -42,10 +42,8 @@ export default function ProfileComponent() {
 
           const requestOptions = {
             method: "POST",
-            headers: new Headers({
-              "Content-Type": "application/x-www-form-urlencoded",
-            }),
-            body: "hash=" + hash,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ hash: hash }),
           };
 
           await fetch(
