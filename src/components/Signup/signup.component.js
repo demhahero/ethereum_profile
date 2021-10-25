@@ -28,6 +28,8 @@ class SginupComponent extends Component {
       transaction: false,
       token: null,
       enable_next: false,
+      error_message: "",
+      isIDValid: null,
     };
 
     this.onSendVerificationCodeClick =
@@ -118,16 +120,25 @@ class SginupComponent extends Component {
   }
 
   async onIDEnterClick(id) {
-    fetch(Config.API_URL + "?do=check_id&id=" + id)
-      .then((response) => response.json())
-      .then((response) => {
-        if (response["result"] === true) {
-          this.setState({ enable_next: true, id: id });
-        } else {
-          alert("Wrong Code, try again!");
-          this.setState({ enable_next: false });
-        }
+    if (id.length > 5 && id.indexOf(" ") === -1) {
+      fetch(Config.API_URL + "?do=check_id&id=" + id)
+        .then((response) => response.json())
+        .then((response) => {
+          if (response["result"] === true) {
+            this.setState({ enable_next: true, isIDValid: false, id: id });
+          } else {
+            this.setState({ error_message: "ID Exists", isIDValid: false });
+            this.setState({ enable_next: false });
+            alert("ID Exists");
+          }
+        });
+    } else {
+      this.setState({
+        enable_next: false,
+        error_message: "Invalid ID",
+        isIDValid: false,
       });
+    }
   }
 
   async onPictureEnterClick() {
@@ -167,19 +178,23 @@ class SginupComponent extends Component {
   }
 
   async doTransaction(hash, content) {
-    try {
-      this.setState({
-        step: 4,
-        progress: (4 / this.steps) * 100,
-      });
-      await this.state.token.methods
-        .changeProfile(hash)
-        .send({ from: this.state.account })
-        .on("confirmation", (reciept) => {
-          this.createProfile(content);
+    if (this.state.id.length < 5 || this.state.id.indexOf(" ") === -1) {
+      alert("Invalid ID! ID should be composed of 6 or more digits");
+    } else {
+      try {
+        this.setState({
+          step: 4,
+          progress: (4 / this.steps) * 100,
         });
-    } catch (e) {
-      console.log("Error, deposit: ", e);
+        await this.state.token.methods
+          .changeProfile(hash)
+          .send({ from: this.state.account })
+          .on("confirmation", (reciept) => {
+            this.createProfile(content);
+          });
+      } catch (e) {
+        console.log("Error, deposit: ", e);
+      }
     }
   }
 
@@ -244,7 +259,11 @@ class SginupComponent extends Component {
             } else if (this.state.step === 3) {
               return (
                 <div>
-                  <SignupIDEnter onIDEnterClick={this.onIDEnterClick} />
+                  <SignupIDEnter
+                    error_message={this.state.error_message}
+                    onIDEnterClick={this.onIDEnterClick}
+                    isIDValid={this.state.isIDValid}
+                  />
 
                   <SignupPictureEnter
                     onPictureEnterClick={this.onPictureEnterClick}
