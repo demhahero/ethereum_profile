@@ -152,10 +152,8 @@ class SginupComponent extends Component {
   async onContentEnterClick(content) {
     const requestOptions = {
       method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/x-www-form-urlencoded",
-      }),
-      body: "content=" + content,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: content }),
     };
     await fetch(
       Config.API_URL +
@@ -201,10 +199,8 @@ class SginupComponent extends Component {
   async createProfile(content) {
     const requestOptions = {
       method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/x-www-form-urlencoded",
-      }),
-      body: "content=" + content,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: content }),
     };
 
     await fetch(
