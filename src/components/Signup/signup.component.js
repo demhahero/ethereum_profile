@@ -178,7 +178,7 @@ class SginupComponent extends Component {
   }
 
   async doTransaction(hash, content) {
-    if (this.state.id.length < 5 || this.state.id.indexOf(" ") === -1) {
+    if (this.state.id.length < 5 || this.state.id.indexOf(" ") !== -1) {
       alert("Invalid ID! ID should be composed of 6 or more digits");
     } else {
       try {
@@ -267,6 +267,7 @@ class SginupComponent extends Component {
 
                   <SignupPictureEnter
                     onPictureEnterClick={this.onPictureEnterClick}
+                    address={this.state.account}
                   />
 
                   <SignupContentEnter
