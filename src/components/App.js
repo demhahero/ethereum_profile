@@ -117,7 +117,7 @@ class App extends Component {
       <Web3ReactProvider getLibrary={this.getLibrary}>
         <Router>
           <div className="text-monospace">
-            <div className="container-fluid mt-5 text-center">
+            <div className="container-fluid mt-5">
               <Nav />
               <Switch>
                 <Route exact path="/">
@@ -141,7 +141,7 @@ class App extends Component {
                   <h2>{this.state.account}</h2>
                   <br></br>
                   <div className="row">
-                    <main role="main" className="col-lg-12  text-center">
+                    <main role="main" className="col-lg-12">
                       <div className="content mr-auto ml-auto">
                         <Tabs
                           defaultActiveKey="profile"

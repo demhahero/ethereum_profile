@@ -1,0 +1,28 @@
+.image_with_badge_container {
+  display: inline-block; /* keeps the img with the badge if the img is forced to a new line */
+  position: relative;
+}
+
+.image_with_badge_container > img {
+  width: 175px;
+}
+
+.badge-on-image {
+  position: absolute;
+  top: 2px; /* position where you want it */
+  left: 2px;
+  padding: 3px 6px;
+  color: blue;
+  size: 20px;
+}
+
+.container {
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+.right {
+  flex-grow: 1;
+}

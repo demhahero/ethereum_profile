@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./profile-main.component.scss";
 import ReactHtmlParser from "react-html-parser";
-import { Card, Container, Row, Col, Image } from "react-bootstrap";
-import { CheckCircle, FileEarmarkX } from "react-bootstrap-icons";
+import {
+  Card,
+  Container,
+  Row,
+  Col,
+  ListGroup,
+  CardGroup,
+} from "react-bootstrap";
+import {
+  CheckCircle,
+  FileEarmarkX,
+  Window,
+  PersonBadge,
+  PinMapFill,
+} from "react-bootstrap-icons";
 import Token from "../../abis/Token.json";
 import Web3 from "web3";
 import { useLocation } from "react-router-dom";
@@ -75,26 +88,49 @@ export default function ProfileComponent() {
   });
 
   return (
-    <Card body>
-      <Container fluid>
+    <Card bg="light" body>
+      <Container fluid style={{ width: "100%" }}>
         <Row>
           <Col>
-            <Image
-              src={Config.UPLOAD_Folder_URL + address + ".png"}
-              thumbnail
-            />
+            <CardGroup>
+              <div className="container">
+                <div className="left">
+                  <div className="image_with_badge_container">
+                    <img
+                      alt="fff"
+                      src={Config.UPLOAD_Folder_URL + address + ".png"}
+                    />
+                    <span className="badge badge-on-image">
+                      {verified ? (
+                        <CheckCircle size={20} />
+                      ) : (
+                        <FileEarmarkX size={20} />
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div className="right">
+                  <ListGroup variant="flush">
+                    <ListGroup.Item>
+                      <PersonBadge size={30} /> {id}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <PinMapFill size={30} /> {address}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <Window size={30} />
+                      {email}
+                    </ListGroup.Item>
+                  </ListGroup>
+                </div>
+              </div>
+            </CardGroup>
           </Col>
-          <Col>ID: {id}</Col>
-          <Col>{verified ? <CheckCircle /> : <FileEarmarkX />}</Col>
         </Row>
         <Row>
-          <Col>{address}</Col>
-        </Row>
-        <Row>
-          <Col>{email}</Col>
-        </Row>
-        <Row>
-          <Col>{ReactHtmlParser(content)}</Col>
+          <Col>
+            <Card body>{ReactHtmlParser(content)}</Card>
+          </Col>
         </Row>
       </Container>
     </Card>
