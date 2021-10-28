@@ -8,7 +8,15 @@ import SignupIDEnter from "./signup-id-enter/signup-id-enter.component";
 import SignupComplete from "./signup-complete/signup-complete.component";
 import SignupContentEnter from "./signup-content-enter/signup-content-enter.component";
 import SignupPictureEnter from "./signup-picture-enter/signup-picture-enter.component";
-import { ProgressBar, Alert, Card, Spinner } from "react-bootstrap";
+import {
+  ProgressBar,
+  Alert,
+  Card,
+  Spinner,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 import Config from "../../config";
 
 class SginupComponent extends Component {
@@ -191,7 +199,7 @@ class SginupComponent extends Component {
             this.createProfile(content);
           });
       } catch (e) {
-        console.log("Error, deposit: ", e);
+        alert("Error, deposit: ", e);
       }
     }
   }
@@ -274,15 +282,29 @@ class SginupComponent extends Component {
                 </div>
               );
             } else if (this.state.step === 4) {
-              return <Spinner animation="border" />;
-            } else {
               return (
-                <SignupComplete
-                  id={this.state.id}
-                  email={this.state.email}
-                  content={this.state.content}
-                />
+                <Container
+                  className="signup-spinner"
+                  fluid
+                  style={{ width: "100%" }}
+                >
+                  <Row>
+                    <Col>
+                      <Alert variant="danger">
+                        Please hold on until the transaction goes through! This
+                        will take some time.
+                      </Alert>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Spinner animation="border" />
+                    </Col>
+                  </Row>
+                </Container>
               );
+            } else {
+              return <SignupComplete id={this.state.id} />;
             }
           })()}
         </Card>

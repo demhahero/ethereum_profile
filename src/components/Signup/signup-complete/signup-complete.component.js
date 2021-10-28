@@ -1,11 +1,10 @@
 import React from "react";
-
-export default function SignupComplete({ name, email, content }) {
+import { useHistory } from "react-router-dom";
+export default function SignupComplete({ id }) {
+  let history = useHistory();
+  history.push("/Profile?id=" + id);
   return (
     <div>
-      <div>Name: {name}</div>
-      <div>Email: {email}</div>
-      <div>Content: {content}</div>
       <div>Complete!</div>
     </div>
   );
