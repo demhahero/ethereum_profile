@@ -23,6 +23,7 @@
     "dotenv": "8.2.0",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
+    "draft-js-import-html": "^1.4.1",
     "mdb-react-ui-kit": "^1.4.0",
     "node-sass": "^4.14.1",
     "react": "^16.14.0",
