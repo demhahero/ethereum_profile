@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Token from "../abis/Token.json";
 import Web3 from "web3";
 import "./App.scss";
-import { Tabs, Tab } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Nav from "./Nav";
 import HomeComponent from "./Home/home.component";
@@ -12,6 +11,7 @@ import ProfileComponent from "./Profile/profile-main.component";
 import EditProfileComponent from "./Profile/edit-profile/edit-profile.component";
 import Footer from "./Footer";
 import Config from "../config";
+import NoWalletComponent from "./Home/no-wallet.component";
 import { Web3ReactProvider } from "@web3-react/core";
 
 class App extends Component {
@@ -118,75 +118,29 @@ class App extends Component {
         <Router>
           <div className="text-monospace">
             <div className="container-fluid mt-5">
-              <Nav />
               <Switch>
                 <Route exact path="/">
+                  <Nav />
                   <HomeComponent />
                 </Route>
+                <Route path="/NoWallet">
+                  <NoWalletComponent />
+                </Route>
                 <Route path="/Profile">
+                  <Nav />
                   <ProfileComponent />
                 </Route>
                 <Route path="/Edit-profile">
+                  <Nav />
                   <EditProfileComponent />
                 </Route>
                 <Route path="/Search">
                   <SearchMainComponent />
+                  <Nav />
                 </Route>
                 <Route path="/Signup">
+                  <Nav />
                   <SginupComponent />
-                </Route>
-                <Route path="/Login">
-                  <br></br>
-                  <h1>Welcome to Profiles</h1>
-                  <h2>{this.state.account}</h2>
-                  <br></br>
-                  <div className="row">
-                    <main role="main" className="col-lg-12">
-                      <div className="content mr-auto ml-auto">
-                        <Tabs
-                          defaultActiveKey="profile"
-                          id="uncontrolled-tab-example"
-                        >
-                          <Tab eventKey="profile" title="Profile">
-                            <div>
-                              Balance: {this.state.balance}
-                              <br></br>
-                              Profile: {this.state.profile_value}
-                            </div>
-                          </Tab>
-                          <Tab eventKey="withdraw" title="Update">
-                            <div>
-                              <form
-                                onSubmit={(e) => {
-                                  e.preventDefault();
-                                  this.setProfile(this.profile_value.value);
-                                }}
-                              >
-                                <div className="form-group mr-sm-2">
-                                  <br></br>
-                                  <textarea
-                                    id="profile_value"
-                                    ref={(input) => {
-                                      this.profile_value = input;
-                                    }}
-                                    className="form-control form-control-md"
-                                    defaultValue={this.state.profile_value}
-                                    required
-                                  />
-                                </div>
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary"
-                                >
-                                  Save
-                                </button>
-                              </form>
-                            </div>
-                          </Tab>
-                        </Tabs>
-                      </div>
-                    </main>
-                  </div>
                 </Route>
               </Switch>
               <Footer />

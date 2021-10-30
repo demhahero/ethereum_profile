@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../Wallet/connectors";
 import "./connect.component.scss";
+import { useHistory } from "react-router-dom";
 
 export default function ConnectToWallet() {
   const { active, account, activate } = useWeb3React();
@@ -23,16 +24,17 @@ export default function ConnectToWallet() {
   //     console.log(ex);
   //   }
   // }
-
+  const history = useHistory();
   useEffect(() => {
     if (typeof window.ethereum === "undefined") {
-      window.alert("Please install MetaMask");
+      history.push("/NoWallet");
+      //window.alert("Please install MetaMask");
     }
 
     if (localStorage.getItem("connected") !== false) {
       activate(injected);
     }
-  }, [activate]);
+  }, [activate, history]);
 
   return (
     <div className="flex flex-col items-center justify-center">
