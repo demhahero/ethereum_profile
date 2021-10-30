@@ -54,9 +54,18 @@ class SginupComponent extends Component {
     if (typeof window.ethereum !== "undefined") {
       const web3 = new Web3(window.ethereum);
       const accounts = await web3.eth.getAccounts();
-
+      //
       //load balance
       if (typeof accounts[0] !== "undefined") {
+        await fetch(Config.API_URL + "?do=get_profile&address=" + accounts[0])
+          .then((response) => response.json())
+          .then((response) => {
+            if (response["result"] === true) {
+              //window.location.href = "/Home";
+            } else {
+            }
+          });
+
         const balance = await web3.eth.getBalance(accounts[0]);
         this.setState({ account: accounts[0], balance: balance, web3: web3 });
       } else {

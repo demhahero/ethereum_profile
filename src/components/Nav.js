@@ -11,7 +11,7 @@ class Nav extends Component {
       content: "",
       account: "",
       balance: 0,
-      id: null,
+      id: false,
     };
     this.loadBlockchainData();
   }
@@ -27,10 +27,10 @@ class Nav extends Component {
         this.setState({ account: accounts[0], balance: balance, web3: web3 });
         this.getID();
       } else {
-        this.setState({ id: "" });
+        this.setState({ id: false });
       }
     } else {
-      this.setState({ id: "" });
+      this.setState({ id: false });
     }
   }
 
@@ -58,16 +58,24 @@ class Nav extends Component {
                 Search
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href={"/Profile?id=" + this.state.id}>
-                Profile
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/Edit-profile">
-                Edit Profile
-              </a>
-            </li>
+            {this.state.id !== false ? (
+              <li className="nav-item">
+                <a className="nav-link" href={"/Profile?id=" + this.state.id}>
+                  Profile
+                </a>
+              </li>
+            ) : (
+              <div></div>
+            )}
+            {this.state.id !== false ? (
+              <li className="nav-item">
+                <a className="nav-link" href="/Edit-profile">
+                  Edit Profile
+                </a>
+              </li>
+            ) : (
+              <div></div>
+            )}
           </ul>
         </div>
         <div className="inline my-2 my-lg-0">

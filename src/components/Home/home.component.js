@@ -13,7 +13,7 @@ class HomeComponent extends Component {
               <Button
                 onClick={(e) => {
                   e.preventDefault();
-                  window.location.href = "/Signup";
+                  window.location.href = "/";
                 }}
               >
                 Register
