@@ -61,7 +61,7 @@ class SginupComponent extends Component {
           .then((response) => response.json())
           .then((response) => {
             if (response["result"] === true) {
-              //window.location.href = "/Home";
+              window.location.href = "/";
             } else {
             }
           });
